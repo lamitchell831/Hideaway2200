@@ -32,8 +32,8 @@
           </div>
         </div>
         <div class="hh-chat-input-area-form">
-          <input type="text" id="hh-name" placeholder="Your name" class="hh-input-field">
-          <input type="email" id="hh-email" placeholder="Your email" class="hh-input-field">
+          <input type="text" id="hh-name" placeholder="Your name *" class="hh-input-field" required>
+          <input type="email" id="hh-email" placeholder="Your email *" class="hh-input-field" required>
           <textarea id="hh-message" placeholder="Your message..." class="hh-input-field hh-textarea" rows="3"></textarea>
           <button onclick="hhChatSend()" class="hh-send-btn">Send Message</button>
         </div>
@@ -265,13 +265,21 @@
     const email = emailInput.value.trim();
     const message = messageInput.value.trim();
     
-    if (!message) {
-      alert('Please enter a message.');
+    if (!name) {
+      alert('Please enter your name.');
+      nameInput.focus();
       return;
     }
     
-    if (!email && !name) {
-      alert('Please provide at least your name or email so we can respond.');
+    if (!email) {
+      alert('Please enter your email so we can respond.');
+      emailInput.focus();
+      return;
+    }
+    
+    if (!message) {
+      alert('Please enter a message.');
+      messageInput.focus();
       return;
     }
     
