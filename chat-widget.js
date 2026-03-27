@@ -10,7 +10,16 @@
     offlineMessage: 'Thanks for your message! I\'ll get back to you shortly.'
   };
 
-  // Create widget HTML
+  // Helper functions defined first
+  function hhFormatTime() {
+    return new Date().toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit',
+      hour12: true 
+    });
+  }
+
+  // Create widget HTML - use placeholder for time, fill in after functions load
   const widgetHTML = `
     <div id="hh-chat-widget" class="hh-chat-closed">
       <div class="hh-chat-header">
@@ -21,7 +30,7 @@
         <div class="hh-chat-messages" id="hh-messages">
           <div class="hh-message hh-message-bot">
             <div class="hh-message-text">${CONFIG.welcomeMessage}</div>
-            <div class="hh-message-time">${hhFormatTime()}</div>
+            <div class="hh-message-time" id="hh-welcome-time">${hhFormatTime()}</div>
           </div>
         </div>
         <div class="hh-chat-input-area">
@@ -279,14 +288,6 @@
     `;
     container.appendChild(messageDiv);
     container.scrollTop = container.scrollHeight;
-  };
-
-  window.hhFormatTime = function() {
-    return new Date().toLocaleTimeString('en-US', { 
-      hour: 'numeric', 
-      minute: '2-digit',
-      hour12: true 
-    });
   };
 
   window.hhEscapeHtml = function(text) {
