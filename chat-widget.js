@@ -4,8 +4,8 @@
 (function() {
   // Configuration
   const CONFIG = {
-    workerUrl: 'https://hideaway2200-chat.lamitchell831.workers.dev',  // Cloudflare Worker endpoint
-    welcomeMessage: 'Hi! Questions about Hideaway 2200? I\'ll connect you with the host.',
+    workerUrl: 'https://hideaway2200-chat.lamitchell831.workers.dev',
+    welcomeMessage: 'Hi! Have questions about Hideaway 2200? Send us a message and we\'ll get back to you shortly.',
   };
 
   // Helper function for time
@@ -21,7 +21,7 @@
   const widgetHTML = `
     <div id="hh-chat-widget" class="hh-chat-closed">
       <div class="hh-chat-header">
-        <span class="hh-chat-title">💬 Chat with Host</span>
+        <span class="hh-chat-title">💬 Questions? Chat with Us</span>
         <button class="hh-chat-toggle" onclick="hhChatToggle()">−</button>
       </div>
       <div class="hh-chat-body">
@@ -31,10 +31,11 @@
             <div class="hh-message-time">${hhFormatTime()}</div>
           </div>
         </div>
-        <div class="hh-chat-input-area">
-          <input type="text" id="hh-input" placeholder="Type your message..." 
-                 onkeypress="if(event.key==='Enter')hhChatSend()">
-          <button onclick="hhChatSend()">Send</button>
+        <div class="hh-chat-input-area-form">
+          <input type="text" id="hh-name" placeholder="Your name" class="hh-input-field">
+          <input type="email" id="hh-email" placeholder="Your email" class="hh-input-field">
+          <textarea id="hh-message" placeholder="Your message..." class="hh-input-field hh-textarea" rows="3"></textarea>
+          <button onclick="hhChatSend()" class="hh-send-btn">Send Message</button>
         </div>
       </div>
     </div>
@@ -50,8 +51,8 @@
         position: fixed;
         bottom: 80px;
         right: 20px;
-        width: 320px;
-        height: 400px;
+        width: 360px;
+        height: 480px;
         background: #f8f6f3;
         border-radius: 12px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.15);
@@ -103,7 +104,8 @@
       }
       
       .hh-chat-messages {
-        flex: 1;
+        flex: 0 0 auto;
+        max-height: 140px;
         overflow-y: auto;
         padding: 16px;
         display: flex;
@@ -139,42 +141,57 @@
         margin-top: 4px;
       }
       
-      .hh-chat-input-area {
-        padding: 12px 16px;
+      .hh-chat-input-area-form {
+        flex: 1;
+        padding: 16px;
         background: #fff;
         border-top: 1px solid #e8e6e1;
         display: flex;
-        gap: 8px;
+        flex-direction: column;
+        gap: 10px;
+        overflow-y: auto;
       }
       
-      .hh-chat-input-area input {
-        flex: 1;
-        padding: 10px 14px;
+      .hh-input-field {
+        padding: 12px 14px;
         border: 1px solid #d4d0c8;
-        border-radius: 20px;
+        border-radius: 8px;
         font-size: 14px;
-        outline: none;
         font-family: inherit;
+        outline: none;
+        width: 100%;
+        box-sizing: border-box;
       }
       
-      .hh-chat-input-area input:focus {
+      .hh-input-field:focus {
         border-color: #2d3a2d;
       }
       
-      .hh-chat-input-area button {
+      .hh-textarea {
+        resize: none;
+        min-height: 80px;
+      }
+      
+      .hh-send-btn {
         background: #2d3a2d;
         color: #f8f6f3;
         border: none;
-        padding: 10px 20px;
-        border-radius: 20px;
+        padding: 12px 20px;
+        border-radius: 8px;
         font-size: 14px;
         cursor: pointer;
         font-weight: 500;
         transition: background 0.2s;
+        margin-top: 4px;
       }
       
-      .hh-chat-input-area button:hover {
+      .hh-send-btn:hover {
         background: #3d4a3d;
+      }
+      
+      .hh-send-btn:disabled {
+        background: #9a9a9a;
+        cursor: not-allowed;
       }
       
       #hh-chat-button {
@@ -231,7 +248,6 @@
       widget.classList.remove('hh-chat-closed');
       button.classList.add('hh-chat-button-open');
       document.querySelector('.hh-chat-toggle').textContent = '−';
-      document.getElementById('hh-input').focus();
     } else {
       widget.classList.add('hh-chat-closed');
       button.classList.remove('hh-chat-button-open');
@@ -240,56 +256,69 @@
   };
 
   window.hhChatSend = async function() {
-    const input = document.getElementById('hh-input');
-    const message = input.value.trim();
+    const nameInput = document.getElementById('hh-name');
+    const emailInput = document.getElementById('hh-email');
+    const messageInput = document.getElementById('hh-message');
+    const sendBtn = document.querySelector('.hh-send-btn');
     
-    if (!message) return;
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const message = messageInput.value.trim();
     
-    // Add user message to chat
-    hhAddMessage(message, 'user');
-    input.value = '';
+    if (!message) {
+      alert('Please enter a message.');
+      return;
+    }
     
-    // Send via Cloudflare Worker
+    if (!email && !name) {
+      alert('Please provide at least your name or email so we can respond.');
+      return;
+    }
+    
+    // Disable button while sending
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending...';
+    
     try {
       const response = await fetch(CONFIG.workerUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: '',
-          email: '',
-          message: message
-        })
+        body: JSON.stringify({ name, email, message })
       });
       
       const result = await response.json();
       
       if (result.success) {
-        hhAddMessage('✓ Message sent! The host will reply on Telegram shortly.', 'bot');
+        // Clear form
+        nameInput.value = '';
+        emailInput.value = '';
+        messageInput.value = '';
+        
+        // Show success in chat
+        const container = document.getElementById('hh-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'hh-message hh-message-bot';
+        messageDiv.innerHTML = `
+          <div class="hh-message-text">✓ Message sent! We'll get back to you within 24 hours.</div>
+          <div class="hh-message-time">${hhFormatTime()}</div>
+        `;
+        container.appendChild(messageDiv);
+        container.scrollTop = container.scrollHeight;
+        
+        sendBtn.textContent = 'Sent!';
+        setTimeout(() => {
+          sendBtn.disabled = false;
+          sendBtn.textContent = 'Send Message';
+        }, 3000);
       } else {
         throw new Error(result.error || 'Failed to send');
       }
     } catch (error) {
       console.error('Chat error:', error);
-      hhAddMessage('⚠️ Having trouble connecting. Please contact us directly.', 'bot');
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send Message';
+      alert('Having trouble sending. Please try again or email us directly.');
     }
-  };
-
-  window.hhAddMessage = function(text, sender) {
-    const container = document.getElementById('hh-messages');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `hh-message hh-message-${sender}`;
-    messageDiv.innerHTML = `
-      <div class="hh-message-text">${hhEscapeHtml(text)}</div>
-      <div class="hh-message-time">${hhFormatTime()}</div>
-    `;
-    container.appendChild(messageDiv);
-    container.scrollTop = container.scrollHeight;
-  };
-
-  window.hhEscapeHtml = function(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
   };
 
   window.hhFormatTime = hhFormatTime;
