@@ -64,24 +64,28 @@
     }
     </script>
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔️</text></svg>">
+    <!-- Favicon - New Logo Icon -->
+    <link rel="icon" type="image/svg+xml" href="hideaway2200-icon.svg">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        'serif': ['Playfair Display', 'serif'],
+                        'serif': ['Cormorant Garamond', 'Georgia', 'serif'],
                         'sans': ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        'forest': '#2d5016',
-                        'sage': '#87a878',
-                        'cream': '#faf9f6',
-                        'warm': '#f5f0e8',
+                        'forest': '#2d3a2d',
+                        'sage': '#5a6b5a',
+                        'sage-light': '#6b7d6b',
+                        'slate-blue': '#7a9db0',
+                        'cream': '#f8f6f3',
+                        'warm': '#e8e6e1',
+                        'warm-dark': '#d4d0c8',
+                        'earth': '#5c4a3d',
                     }
                 }
             }
@@ -101,19 +105,40 @@
 <body class="font-sans text-gray-800 bg-cream">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+    <nav class="fixed w-full z-50 bg-cream/95 backdrop-blur-md border-b border-warm-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0">
-                    <span class="font-serif text-xl font-semibold text-forest">Hideaway 2200</span>
+                    <!-- Logo SVG -->
+                    <a href="#" class="flex items-center gap-2">
+                        <svg width="50" height="30" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" class="hidden sm:block">
+                            <defs>
+                                <linearGradient id="navMtn" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#4a5d4a"/>
+                                    <stop offset="100%" style="stop-color:#2d3a2d"/>
+                                </linearGradient>
+                                <linearGradient id="navWater" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#7a9db0"/>
+                                    <stop offset="100%" style="stop-color:#5a7a8a"/>
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="250" cy="150" rx="230" ry="140" fill="#d4d0c8"/>
+                            <g clip-path="url(#clipNav)">
+                                <polygon points="0,220 60,140 120,190 180,130 260,180 340,120 420,170 500,130 500,300 0,300" fill="url(#navMtn)"/>
+                                <rect x="0" y="205" width="500" height="95" fill="url(#navWater)"/>
+                            </g>
+                            <ellipse cx="250" cy="150" rx="230" ry="140" fill="none" stroke="#5a6b5a" stroke-width="8"/>
+                        </svg>
+                        <span class="font-serif text-2xl font-medium text-forest tracking-wide">Hideaway 2200</span>
+                    </a>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#about" class="hover:text-forest transition">About</a>
-                        <a href="#amenities" class="hover:text-forest transition">Amenities</a>
-                        <a href="#location" class="hover:text-forest transition">Location</a>
-                        <a href="#guide" class="hover:text-forest transition">Guidebook</a>
-                        <a href="#contact" class="bg-forest text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition">Book Now</a>
+                        <a href="#about" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">About</a>
+                        <a href="#amenities" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">Amenities</a>
+                        <a href="#location" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">Location</a>
+                        <a href="#guide" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">Guidebook</a>
+                        <a href="#contact" class="bg-forest text-cream px-6 py-2.5 rounded-lg hover:bg-sage transition tracking-wide text-sm uppercase">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -122,52 +147,52 @@
 
     <!-- Hero Section -->
     <section class="hero-bg h-screen flex items-center justify-center text-center px-4">
-        <div class="max-w-4xl mx-auto text-white">
-            <p class="text-lg md:text-xl mb-4 tracking-widest uppercase opacity-90">Family Tiny House Rental in Asheville, NC</p>
-            <h1 class="font-serif text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                Escape to the<br>Mountains
+        <div class="max-w-4xl mx-auto text-cream">
+            <p class="text-lg md:text-xl mb-4 tracking-[0.3em] uppercase opacity-90 font-light">Asheville, North Carolina</p>
+            <h1 class="font-serif text-5xl md:text-7xl font-medium mb-6 leading-tight tracking-tight">
+                Hideaway 2200
             </h1>
-            <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-2xl mx-auto">
-                The perfect <strong>family tiny house</strong> on a private pond. Sleeps 7 with queen bed, 3 bunks, loft & pull-out couch. Starting at <strong>$165/night</strong>. Just 10 min from downtown Asheville.
+            <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-2xl mx-auto font-light">
+                A private pond retreat sleeping 7. Queen bed, 3 bunks, loft & pull-out. Full kitchen, fire pit, large porch. Starting at <strong class="font-medium">$165/night</strong>.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#contact" class="bg-white text-forest px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition">
-                    Check Availability
+                <a href="#contact" class="bg-cream text-forest px-8 py-4 rounded-lg font-medium hover:bg-warm transition tracking-wide">
+                    CHECK AVAILABILITY
                 </a>
-                <a href="#guide" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-forest transition">
-                    View Local Guide
+                <a href="#guide" class="border border-cream/60 text-cream px-8 py-4 rounded-lg font-medium hover:bg-cream/10 transition tracking-wide">
+                    VIEW GUIDEBOOK
                 </a>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 md:py-32 bg-white">
+    <section id="about" class="py-20 md:py-32 bg-cream">
         <article class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <p class="text-forest font-semibold mb-2 uppercase tracking-wider">Your Mountain Retreat</p>
-                    <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                    <p class="text-sage font-medium mb-2 uppercase tracking-[0.2em] text-sm">Your Mountain Retreat</p>
+                    <h2 class="font-serif text-4xl md:text-5xl font-medium mb-6 text-forest">
                         Asheville Tiny House with Private Pond
                     </h2>
                     <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-                        <strong>Hideaway 2200</strong> is a modern tiny house rental in Asheville, NC that defies expectations. Nestled beside a private pond just minutes from downtown, this 400-square-foot retreat sleeps up to 7 guests comfortably — perfect for families or friend groups seeking a unique mountain getaway.
+                        <strong class="text-forest font-medium">Hideaway 2200</strong> is a modern tiny house rental in Asheville, NC that defies expectations. Nestled beside a private pond just minutes from downtown, this 400-square-foot retreat sleeps up to 7 guests comfortably — perfect for families or friend groups seeking a unique mountain getaway.
                     </p>
                     <p class="text-lg text-gray-600 mb-6 leading-relaxed">
                         Unlike cramped hotel rooms, you'll enjoy a full kitchen with dishwasher and full-size fridge, a real bathroom (not a wet bath!), and a large wraparound porch overlooking the water. End your days gathered around the fire pit as the stars come out over the Blue Ridge Mountains.
                     </p>
-                    <div class="grid grid-cols-3 gap-6 text-center">
-                        <div>
-                            <p class="font-serif text-3xl font-bold text-forest">7</p>
-                            <p class="text-sm text-gray-500">Guests</p>
+                    <div class="grid grid-cols-3 gap-6 text-center pt-4">
+                        <div class="border-t border-sage/30 pt-4">
+                            <p class="font-serif text-4xl font-medium text-forest">7</p>
+                            <p class="text-sm text-sage tracking-wide uppercase mt-1">Guests</p>
                         </div>
-                        <div>
-                            <p class="font-serif text-3xl font-bold text-forest">1</p>
-                            <p class="text-sm text-gray-500">Bath</p>
+                        <div class="border-t border-sage/30 pt-4">
+                            <p class="font-serif text-4xl font-medium text-forest">1</p>
+                            <p class="text-sm text-sage tracking-wide uppercase mt-1">Bath</p>
                         </div>
-                        <div>
-                            <p class="font-serif text-3xl font-bold text-forest">$165</p>
-                            <p class="text-sm text-gray-500">From/Night</p>
+                        <div class="border-t border-sage/30 pt-4">
+                            <p class="font-serif text-4xl font-medium text-forest">$165</p>
+                            <p class="text-sm text-sage tracking-wide uppercase mt-1">From/Night</p>
                         </div>
                     </div>
                 </div>
@@ -176,9 +201,9 @@
                          alt="Hideaway 2200 tiny house interior with modern design and mountain views near Asheville NC" 
                          loading="lazy"
                          class="rounded-2xl shadow-2xl w-full">
-                    <figcaption class="absolute -bottom-6 -left-6 bg-forest text-white p-6 rounded-xl shadow-lg hidden md:block">
+                    <figcaption class="absolute -bottom-6 -left-6 bg-forest text-cream p-6 rounded-xl shadow-lg hidden md:block">
                         <p class="font-serif text-lg">★★★★★</p>
-                        <p class="text-sm mt-1">"Perfect Asheville tiny house getaway"</p>
+                        <p class="text-sm mt-1 opacity-90">"Perfect Asheville getaway"</p>
                     </figcaption>
                 </figure>
             </div>
@@ -189,8 +214,8 @@
     <section id="amenities" class="py-20 md:py-32 bg-warm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <p class="text-forest font-semibold mb-2 uppercase tracking-wider">Everything You Need</p>
-                <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900">
+                <p class="text-sage font-medium mb-2 uppercase tracking-[0.2em] text-sm">Everything You Need</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-medium text-forest">
                     Modern Comfort in the Woods
                 </h2>
             </div>
@@ -249,15 +274,15 @@
     </section>
 
     <!-- Location Section -->
-    <section id="location" class="py-20 md:py-32 bg-forest text-white">
+    <section id="location" class="py-20 md:py-32 bg-forest text-cream">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <p class="text-sage font-semibold mb-2 uppercase tracking-wider">The Location</p>
-                    <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6">
+                    <p class="text-sage-light font-medium mb-2 uppercase tracking-[0.2em] text-sm">The Location</p>
+                    <h2 class="font-serif text-4xl md:text-5xl font-medium mb-6">
                         Best of Both Worlds
                     </h2>
-                    <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                    <p class="text-lg text-sage-light/80 mb-8 leading-relaxed">
                         Tucked away in a quiet wooded setting, yet just minutes from everything Asheville has to offer. Wake up to birdsong, spend your day exploring breweries and hiking trails, then return to your peaceful retreat.
                     </p>
                     
@@ -265,53 +290,53 @@
                         <div class="flex items-center">
                             <span class="text-2xl mr-4">⛰️</span>
                             <div>
-                                <p class="font-semibold">Blue Ridge Parkway</p>
-                                <p class="text-sm text-gray-400">12 min via Beaverdam Rd</p>
+                                <p class="font-medium text-cream">Blue Ridge Parkway</p>
+                                <p class="text-sm text-sage-light">12 min via Beaverdam Rd</p>
                             </div>
                         </div>
                         <div class="flex items-center">
                             <span class="text-2xl mr-4">🍺</span>
                             <div>
-                                <p class="font-semibold">Downtown Asheville</p>
-                                <p class="text-sm text-gray-400">10 min via Patton Ave</p>
+                                <p class="font-medium text-cream">Downtown Asheville</p>
+                                <p class="text-sm text-sage-light">10 min via Patton Ave</p>
                             </div>
                         </div>
                         <div class="flex items-center">
                             <span class="text-2xl mr-4">🏰</span>
                             <div>
-                                <p class="font-semibold">Biltmore Estate</p>
-                                <p class="text-sm text-gray-400">18 min via I-40 E</p>
+                                <p class="font-medium text-cream">Biltmore Estate</p>
+                                <p class="text-sm text-sage-light">18 min via I-40 E</p>
                             </div>
                         </div>
                         <div class="flex items-center">
                             <span class="text-2xl mr-4">✈️</span>
                             <div>
-                                <p class="font-semibold">Asheville Airport (AVL)</p>
-                                <p class="text-sm text-gray-400">17 min via I-26 W</p>
+                                <p class="font-medium text-cream">Asheville Airport (AVL)</p>
+                                <p class="text-sm text-sage-light">17 min via I-26 W</p>
                             </div>
                         </div>
                         <div class="flex items-center">
                             <span class="text-2xl mr-4">🥾</span>
                             <div>
-                                <p class="font-semibold">Hiking Trails</p>
-                                <p class="text-sm text-gray-400">5-15 min to trailheads</p>
+                                <p class="font-medium text-cream">Hiking Trails</p>
+                                <p class="text-sm text-sage-light">5-15 min to trailheads</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl">
-                    <h3 class="font-serif text-2xl font-bold mb-4">📍 Address</h3>
-                    <div class="space-y-4 text-gray-300">
-                        <p class="text-lg text-white font-semibold">845 Old Marshall Hwy<br>Asheville, NC 28804</p>
+                <div class="bg-sage/10 backdrop-blur-md p-8 rounded-2xl border border-sage/20">
+                    <h3 class="font-serif text-2xl font-medium mb-4">📍 Address</h3>
+                    <div class="space-y-4 text-sage-light">
+                        <p class="text-lg text-cream font-medium">845 Old Marshall Hwy<br>Asheville, NC 28804</p>
                         
-                        <hr class="border-white/20">
+                        <hr class="border-sage/20">
                         
-                        <p><strong class="text-white">From I-40 West:</strong> Take Exit 44 (Asheville), merge onto I-240 N, take Exit 7 (Patton Ave), turn left onto Patton Ave, continue 2.5 miles, turn right onto Old Marshall Hwy, destination is 0.8 miles on left.</p>
-                        <p><strong class="text-white">From AVL Airport:</strong> 15 minutes via I-26 W to I-40 W, Exit 44</p>
-                        <p><strong class="text-white">Parking:</strong> Free dedicated driveway parking for 2 vehicles</p>
+                        <p><strong class="text-cream">From I-40 West:</strong> Take Exit 44 (Asheville), merge onto I-240 N, take Exit 7 (Patton Ave), turn left onto Patton Ave, continue 2.5 miles, turn right onto Old Marshall Hwy, destination is 0.8 miles on left.</p>
+                        <p><strong class="text-cream">From AVL Airport:</strong> 15 minutes via I-26 W to I-40 W, Exit 44</p>
+                        <p><strong class="text-cream">Parking:</strong> Free dedicated driveway parking for 2 vehicles</p>
                     </div>
-                    <div class="mt-6 p-4 bg-white/10 rounded-lg">
-                        <p class="text-sm text-sage">🗺️ Check-in instructions and detailed directions sent after booking</p>
+                    <div class="mt-6 p-4 bg-sage/10 rounded-lg border border-sage/20">
+                        <p class="text-sm text-sage-light">🗺️ Check-in instructions and detailed directions sent after booking</p>
                     </div>
                 </div>
             </div>
@@ -319,21 +344,21 @@
     </section>
 
     <!-- Guidebook Section -->
-    <section id="guide" class="py-20 md:py-32 bg-white">
+    <section id="guide" class="py-20 md:py-32 bg-cream">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-forest font-semibold mb-2 uppercase tracking-wider">Curated by Your Host</p>
-            <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+            <p class="text-sage font-medium mb-2 uppercase tracking-[0.2em] text-sm">Curated by Your Host</p>
+            <h2 class="font-serif text-4xl md:text-5xl font-medium mb-6 text-forest">
                 The Asheville Local Guide
             </h2>
             <p class="text-xl text-gray-600 mb-8">
                 Not the tourist traps — the real Asheville from someone who lives here. Best restaurants, breweries, hikes, and hidden gems.
             </p>
-            <a href="asheville-guidebook.pdf" download 
-               class="inline-flex items-center bg-forest text-white px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition text-lg">
+            <a href="guidebook.html" 
+               class="inline-flex items-center bg-forest text-cream px-8 py-4 rounded-lg font-medium hover:bg-sage transition text-lg tracking-wide">
                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                 </svg>
-                Download Guidebook (PDF)
+                VIEW GUIDEBOOK
             </a>
         </div>
     </section>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Asheville Local Guide | Hideaway 2200</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'serif': ['Cormorant Garamond', 'Georgia', 'serif'],
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'forest': '#2d3a2d',
+                        'sage': '#5a6b5a',
+                        'sage-light': '#6b7d6b',
+                        'slate-blue': '#7a9db0',
+                        'cream': '#f8f6f3',
+                        'warm': '#e8e6e1',
+                        'warm-dark': '#d4d0c8',
+                        'earth': '#5c4a3d',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-pattern {
+            background: linear-gradient(rgba(45, 58, 45, 0.85), rgba(45, 58, 45, 0.9)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300"><polygon points="0,220 60,140 120,190 180,130 260,180 340,120 420,170 500,130 500,300 0,300" fill="%235a6b5a" opacity="0.3"/></svg>');
+            background-size: cover, 500px 300px;
+        }
+        .section-divider {
+            border-top: 1px solid #d4d0c8;
+            margin: 3rem 0;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-cream">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-cream/95 backdrop-blur-md border-b border-warm-dark">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="font-serif text-xl font-medium text-forest tracking-wide">
+                ← Back to Hideaway 2200
+            </a>
+            <button onclick="window.print()" class="text-sage hover:text-forest transition text-sm tracking-wide uppercase">
+                Print / Save PDF
+            </button>
+        </div>
+    </nav>
+
+    <!-- Cover / Hero -->
+    <section class="hero-pattern min-h-screen flex items-center justify-center text-cream pt-20">
+        <div class="text-center max-w-3xl px-6">
+            <!-- Logo -->
+            <svg width="200" height="120" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-8">
+                <defs>
+                    <linearGradient id="mtn" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#6b7d6b"/>
+                        <stop offset="100%" style="stop-color:#2d3a2d"/>
+                    </linearGradient>
+                    <linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#7a9db0"/>
+                        <stop offset="100%" style="stop-color:#5a7a8a"/>
+                    </linearGradient>
+                    <clipPath id="oval">
+                        <ellipse cx="250" cy="150" rx="230" ry="140"/>
+                    </clipPath>
+                </defs>
+                <ellipse cx="250" cy="150" rx="235" ry="145" fill="#d4d0c8"/>
+                <ellipse cx="250" cy="150" rx="230" ry="140" fill="#e8e6e1"/>
+                <g clip-path="url(#oval)">
+                    <polygon points="0,220 60,140 120,190 180,130 260,180 340,120 420,170 500,130 500,300 0,300" fill="url(#mtn)"/>
+                    <rect x="0" y="205" width="500" height="95" fill="url(#water)"/>
+                    <ellipse cx="150" cy="235" rx="80" ry="8" fill="none" stroke="#8ab0c0" stroke-width="1" opacity="0.5"/>
+                    <ellipse cx="350" cy="250" rx="100" ry="10" fill="none" stroke="#8ab0c0" stroke-width="1" opacity="0.4"/>
+                </g>
+                <ellipse cx="250" cy="150" rx="230" ry="140" fill="none" stroke="#5a6b5a" stroke-width="6"/>
+            </svg>
+            
+            <p class="text-sage-light text-sm tracking-[0.3em] uppercase mb-4">A Curated Guide</p>
+            <h1 class="font-serif text-5xl md:text-7xl font-medium mb-6">The Asheville Local Guide</h1>
+            <p class="text-xl text-sage-light/90 max-w-xl mx-auto leading-relaxed">
+                Not the tourist traps. The real Asheville from someone who lives here. Best restaurants, breweries, hikes, and hidden gems.
+            </p>
+            <p class="mt-12 text-sage-light text-sm">Hideaway 2200 • 845 Old Marshall Hwy • Asheville, NC</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <main class="max-w-4xl mx-auto px-6 py-20">
+
+        <!-- Introduction -->
+        <section class="mb-16">
+            <p class="text-sage font-medium mb-2 uppercase tracking-[0.2em] text-sm">Welcome</p>
+            <h2 class="font-serif text-3xl md:text-4xl font-medium text-forest mb-6">Your Host's Picks</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                I've lived in Asheville for years and I've seen what the guidebooks miss. This isn't a comprehensive list — it's a curated collection of the places I actually go, the hikes I take visitors on, and the restaurants that never disappoint.
+            </p>
+            <p class="text-lg leading-relaxed">
+                Everything here is within 20 minutes of Hideaway 2200. No tourist traps, just the good stuff.
+            </p>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Restaurants -->
+        <section class="mb-16">
+            <p class="text-sage font-medium mb-2 uppercase tracking-[0.2em] text-sm">Dining</p>
+            <h2 class="font-serif text-3xl md:text-4xl font-medium text-forest mb-8">Where to Eat</h2>
+
+            <div class="space-y-8">
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Cúrate</h3>
+                    <p class="text-sage text-sm mb-2">Spanish Tapas • Downtown</p>
+                    <p class="text-gray-600">The real deal. Authentic Spanish tapas, incredible wine list. Get the patatas bravas and jamón ibérico. Reservations essential.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Buxton Hall Barbecue</h3>
+                    <p class="text-sage text-sm mb-2">Barbecue • South Slope</p>
+                    <p class="text-gray-600">Whole hog barbecue in a converted skating rink. The pulled pork plate is legendary. Come hungry.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Chai Pani</h3>
+                    <p class="text-sage text-sm mb-2">Indian Street Food • Downtown</p>
+                    <p class="text-gray-600">Chaats, thalis, and the best okra fries you've ever had. Vibrant, casual, and consistently excellent.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Vivian</h3>
+                    <p class="text-sage text-sm mb-2">Modern European • The River Arts District</p>
+                    <p class="text-gray-600">Handmade pasta in an intimate setting. The cacio e pepe and wine selection are exceptional. Perfect for date night.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Early Girl Eatery</h3>
+                    <p class="text-sage text-sm mb-2">Southern Breakfast • Downtown</p>
+                    <p class="text-gray-600">Local institution for breakfast. Try the tofu scramble or the sweet potato pancakes. Expect a wait on weekends.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">White Duck Taco Shop</h3>
+                    <p class="text-sage text-sm mb-2">Tacos • Multiple Locations</p>
+                    <p class="text-gray-600">Creative tacos with local ingredients. The Bangkok Shrimp and Lamb Gyro tacos are must-orders. Quick and casual.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Breweries -->
+        <section class="mb-16">
+            <p class="text-sage font-medium mb-2 uppercase tracking-[0.2em] text-sm">Drinks</p>
+            <h2 class="font-serif text-3xl md:text-4xl font-medium text-forest mb-8">Breweries & Bars</h2>
+
+            <div class="space-y-8">
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Bhramari Brewing Company</h3>
+                    <p class="text-sage text-sm mb-2">Brewery • Downtown</p>
+                    <p class="text-gray-600">Experimental, creative beers with excellent food. The outdoor patio is perfect for groups. Try the sours.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Burial Beer Co.</h3>
+                    <p class="text-sage text-sm mb-2">Brewery • South Slope</p>
+                    <p class="text-gray-600">Dark, moody aesthetic with world-class beers. The Skillet Donut Stout is a local legend. Great outdoor space.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Highland Brewing Company</h3>
+                    <p class="text-sage text-sm mb-2">Brewery • East Asheville</p>
+                    <p class="text-gray-600">Asheville's original brewery. The rooftop bar has incredible mountain views. Classic Gaelic Ale is the flagship.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Antidote Cocktail Lab</h3>
+                    <p class="text-sage text-sm mb-2">Cocktails • North Asheville</p>
+                    <p class="text-gray-600">If you're over beer, this is where to go. Inventive cocktails in a speakeasy atmosphere. The bartenders know their craft.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Hiking -->
+        <section class="mb-16">
+            <p class="text-sage font-medium mb-2 uppercase tracking-[0.2em] text-sm">Outdoors</p>
+            <h2 class="font-serif text-3xl md:text-4xl font-medium text-forest mb-8">Hiking & Nature</h2>
+
+            <div class="space-y-8">
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Craggy Gardens</h3>
+                    <p class="text-sage text-sm mb-2">Blue Ridge Parkway • 25 min drive</p>
+                    <p class="text-gray-600">My favorite sunset spot. The Craggy Pinnacle trail is short (1.4 miles) but steep, with 360° views from the summit. Go for golden hour.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Mount Pisgah Trail</h3>
+                    <p class="text-sage text-sm mb-2">Blue Ridge Parkway • 20 min drive</p>
+                    <p class="text-gray-600">5.6 mile out-and-back with serious elevation gain. The view from the summit is worth every step. Bring water.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Folk Art Center Trail</h3>
+                    <p class="text-sage text-sm mb-2">Blue Ridge Parkway • 12 min drive</p>
+                    <p class="text-gray-600">Easy, accessible trail behind the Folk Art Center. Great for a quick morning walk. Combine with browsing the craft shop.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Chimney Rock State Park</h3>
+                    <p class="text-sage text-sm mb-2">Lake Lure • 40 min drive</p>
+                    <p class="text-gray-600">Worth the drive. Take the elevator up Chimney Rock, then hike the Exclamation Point trail for panoramic lake views.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">The North Carolina Arboretum</h3>
+                    <p class="text-sage text-sm mb-2">South Asheville • 15 min drive</p>
+                    <p class="text-gray-600">Beautiful gardens, bonsai collection, and easy walking trails. The quilt garden is stunning in summer. Free to enter, parking $16.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Hidden Gems -->
+        <section class="mb-16">
+            <p class="text-sage font-medium mb-2 uppercase tracking-[0.2em] text-sm">Secret Spots</p>
+            <h2 class="font-serif text-3xl md:text-4xl font-medium text-forest mb-8">Hidden Gems</h2>
+
+            <div class="space-y-8">
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">The Collider</h3>
+                    <p class="text-sage text-sm mb-2">Coworking / Coffee • Downtown</p>
+                    <p class="text-gray-600">Stunning modern space on the top floor of a historic building. Great coffee, even better views. Day passes available if you need to work.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Asheville Pinball Museum</h3>
+                    <p class="text-sage text-sm mb-2">Museum / Arcade • Downtown</p>
+                    <p class="text-gray-600">Play vintage pinball machines from the 60s to today. $15 for unlimited play. Surprisingly fun for all ages.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Woolworth Walk</h3>
+                    <p class="text-sage text-sm mb-2">Art Gallery • Downtown</p>
+                    <p class="text-gray-600">Historic Woolworth building converted into artist studios and galleries. The old lunch counter is now a coffee shop. Great rainy day spot.</p>
+                </div>
+
+                <div class="border-l-2 border-sage pl-6">
+                    <h3 class="font-serif text-xl font-medium text-forest">Battery Park Book Exchange</h3>
+                    <p class="text-sage text-sm mb-2">Bookstore / Wine Bar • Downtown</p>
+                    <p class="text-gray-600">Browse used books while sipping wine or champagne. Cozy leather chairs, fireplaces, and endless shelves to explore.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Practical Info -->
+        <section class="mb-16">
+            <p class="text-sage font-medium mb-2 uppercase tracking-[0.2em] text-sm">Logistics</p>
+            <h2 class="font-serif text-3xl md:text-4xl font-medium text-forest mb-8">Practical Info</h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-serif text-lg font-medium text-forest mb-3">Grocery Stores</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><strong class="text-forest">Whole Foods</strong> — 10 min, downtown</li>
+                        <li><strong class="text-forest">Greenlife Grocery</strong> — 12 min, local favorite</li>
+                        <li><strong class="text-forest">Aldi</strong> — 8 min, budget option</li>
+                        <li><strong class="text-forest">Ingles</strong> — 5 min, closest</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-serif text-lg font-medium text-forest mb-3">Coffee</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><strong class="text-forest">Double D's</strong> — Best espresso, locals' spot</li>
+                        <li><strong class="text-forest">PennyCup</strong> — Roastery, great beans to bring home</li>
+                        <li><strong class="text-forest">Summit Coffee</strong> — River Arts District, beautiful space</li>
+                        <li><strong class="text-forest">High Five</strong> — Downtown, good for people watching</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-serif text-lg font-medium text-forest mb-3">Emergency</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><strong class="text-forest">Mission Hospital</strong> — 12 min, main hospital</li>
+                        <li><strong class="text-forest">Urgent Care</strong> — 8 min, on Patton Ave</li>
+                        <li><strong class="text-forest">Emergency:</strong> 911</li>
+                        <li><strong class="text-forest">Non-emergency:</strong> (828) 252-1110</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-serif text-lg font-medium text-forest mb-3">House Notes</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li>WiFi: Starlink (high speed)</li>
+                        <li>Fire pit: Firewood in shed</li>
+                        <li>Pond: Catch and release fishing OK</li>
+                        <li>Check-out: 11 AM (flexible if no guest after)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Outro -->
+        <section class="text-center py-8">
+            <svg width="100" height="60" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-6">
+                <ellipse cx="250" cy="150" rx="230" ry="140" fill="none" stroke="#5a6b5a" stroke-width="8"/>
+                <polygon points="0,220 60,140 120,190 180,130 260,180 340,120 420,170 500,130 500,300 0,300" fill="#5a6b5a"/>
+                <rect x="0" y="205" width="500" height="95" fill="#7a9db0"/>
+            </svg>
+            
+            <h2 class="font-serif text-2xl font-medium text-forest mb-4">Enjoy Asheville</h2>
+            <p class="text-gray-600 mb-6">
+                Text me if you need anything else. Happy to share more recommendations based on what you're into.
+            </p>
+            <p class="text-sage text-sm">
+                Hideaway 2200 • Asheville, NC
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-forest text-cream py-8">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <p class="font-serif text-lg mb-2">Hideaway 2200</p>
+            <p class="text-sage-light text-sm">845 Old Marshall Hwy • Asheville, NC 28804</p>
+        </div>
+    </footer>
+
+</body>
+</html>
