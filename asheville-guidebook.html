@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>The Asheville Local Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #fff;
+        }
+        
+        .cover {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cover::before {
+            content: "🏔️";
+            font-size: 120px;
+            opacity: 0.3;
+            position: absolute;
+            top: 10%;
+            right: 10%;
+        }
+        
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .cover .subtitle {
+            font-size: 1.5em;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        .cover .tagline {
+            font-size: 1.2em;
+            font-style: italic;
+            opacity: 0.8;
+        }
+        
+        .page {
+            padding: 60px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            color: #764ba2;
+            margin: 40px 0 20px 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            color: #667eea;
+            margin: 30px 0 15px 0;
+        }
+        
+        .intro-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .highlight-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        tr:hover {
+            background: #e3f2fd;
+        }
+        
+        .emoji-title {
+            font-size: 1.3em;
+            margin-right: 10px;
+        }
+        
+        ul {
+            margin: 15px 0 15px 30px;
+        }
+        
+        li {
+            margin: 8px 0;
+            line-height: 1.8;
+        }
+        
+        .price {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        .price-low {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .price-mid {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .price-high {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .must-do {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .must-do h3 {
+            color: #c0392b;
+            margin-top: 0;
+        }
+        
+        .number-list {
+            counter-reset: item;
+            list-style: none;
+        }
+        
+        .number-list li {
+            counter-increment: item;
+            margin: 15px 0;
+            padding-left: 50px;
+            position: relative;
+        }
+        
+        .number-list li::before {
+            content: counter(item);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .section-divider {
+            height: 5px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            margin: 40px 0;
+            border-radius: 3px;
+        }
+        
+        .tip-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .tip-box strong {
+            color: #2e7d32;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 60px;
+        }
+        
+        .category-icon {
+            font-size: 2em;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+    <h1>The Asheville Local Guide</h1>
+    <p class="subtitle">Your Tiny House Companion</p>
+    <p class="tagline">Curated by your host — the insider's guide to the best of Asheville</p>
+</div>
+
+<!-- INTRO -->
+<div class="page">
+    <div class="intro-box">
+        <h2>Welcome to Asheville!</h2>
+        <p>Welcome to one of America's most beloved mountain towns. Asheville is where craft beer meets farm-to-table dining, where artists paint alongside the Blue Ridge Mountains, and where every local has a favorite hiking trail they guard like a secret.</p>
+        <p>This guide isn't the tourist brochure — it's the real Asheville, from someone who lives here. Whether you're here for the breweries, the hikes, or just to breathe that clean mountain air, I've got you covered.</p>
+    </div>
+
+    <div class="highlight-box">
+        <strong>🎯 Pro Tip:</strong> Asheville is at 2,200 feet elevation. That means it's 10-15°F cooler than nearby cities. Pack layers — mountain weather changes fast!
+    </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- EATS -->
+<div class="page">
+    <h2><span class="category-icon">🍽️</span>Eats</h2>
+    
+    <div class="must-do">
+        <h3>Must-Eat Restaurants</h3>
+        <p><strong>Cúrate</strong> — Spanish tapas that will ruin all other tapas for you. The octopus and gambas al ajillo are legendary. <em>Reserve ahead — this books weeks out.</em></p>
+        <p><strong>Biscuit Head</strong> — Cathead biscuits (yes, they're as big as a cat's head) with gravity-defying gravy. The line moves fast, and it's worth it.</p>
+        <p><strong>12 Bones Smokehouse</strong> — Obama ate here twice. That should tell you everything. Get the ribs and mac n cheese.</p>
+    </div>
+
+    <h3>Breakfast & Brunch</h3>
+    <table>
+        <tr>
+            <th>Restaurant</th>
+            <th>Neighborhood</th>
+            <th>Why Go</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+            <td><strong>Biscuit Head</strong></td>
+            <td>West Asheville</td>
+            <td>Cathead biscuits, crazy good gravy</td>
+            <td><span class="price price-low">$</span></td>
+        </tr>
+        <tr>
+            <td><strong>Sunny Point Café</strong></td>
+            <td>West Asheville</td>
+            <td>Local favorite, huevos rancheros</td>
+            <td><span class="price price-mid">$$</span></td>
+        </tr>
+        <tr>
+            <td><strong>Early Girl Eatery</strong></td>
+            <td>Downtown</td>
+            <td>Southern comfort, all-day breakfast</td>
+            <td><span class="price price-mid">$$</span></td>
+        </tr>
+        <tr>
+            <td><strong>King Daddy's</strong></td>
+            <td>West Asheville</td>
+            <td>Chicken & waffles, funky vibe</td>
+            <td><span class="price price-mid">$$</span></td>
+        </tr>
+    </table>
+
+    <h3>Lunch Spots</h3>
+    <table>
+        <tr>
+            <th>Restaurant</th>
+            <th>Neighborhood</th>
+            <th>Specialty</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+            <td><strong>12 Bones Smokehouse</strong></td>
+            <td>River Arts</td>
+            <td>Obama-approved BBQ</td>
+            <td><span class="price price-mid">$$</span></td>
+        </tr>
+        <tr>
+            <td><strong>White Duck Taco</strong></td>
+            <td>River Arts/Downtown</td>
+            <td>Creative tacos, great patio</td>
+            <td><span class="price price-low">$</span></td>
+        </tr>
+        <tr>
+            <td><strong>Chai Pani</strong></td>
+            <td>Downtown</td>
+            <td>Indian street food, award-winning</td>
+            <td><span class="price price-mid">$$</span></td>
+        </tr>
+        <tr>
+            <td><strong>Farm Burger</strong></td>
+            <td>Multiple</td>
+            <td>Local beef, build-your-own</td>
+            <td><span class="price price-mid">$$</span></td>
+        </tr>
+    </table>
+
+    <h3>Dinner Favorites</h3>
+    <table>
+        <tr>
+            <th>Restaurant</th>
+            <th>Cuisine</th>
+            <th>Must Order</th>
+            <th>Reserve?</th>
+        </tr>
+        <tr>
+            <td><strong>Cúrate</strong></td>
+            <td>Spanish Tapas</td>
+            <td>Octopus, gambas al ajillo</td>
+            <td><strong>Essential</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Rhubarb</strong></td>
+            <td>Seasonal Southern</td>
+            <td>Trout, pork chop</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td><strong>Bull & Beggar</strong></td>
+            <td>Steakhouse</td>
+            <td>Bone marrow, ribeye</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td><strong>Vivian</strong></td>
+            <td>Modern Italian</td>
+            <td>Handmade pasta</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td><strong>Holeman & Finch</strong></td>
+            <td>Southern Pub</td>
+            <td>Burgers, craft cocktails</td>
+            <td>Walk-in</td>
+        </tr>
+    </table>
+
+    <div class="tip-box">
+        <strong>💡 Local Secret:</strong> Many restaurants offer lunch versions of dinner menus at lower prices. Check for weekday lunch specials!
+    </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- BREWERIES -->
+<div class="page">
+    <h2><span class="category-icon">🍺</span>Breweries (Beer City USA!)</h2>
+    
+    <p>Asheville didn't invent craft beer, but we perfected it. With more breweries per capita than any US city, you're in for a hoppy time.</p>
+
+    <ol class="number-list">
+        <li><strong>Sierra Nevada</strong> (Mills River) — A brewery so beautiful it has its own hiking trail. Free tours, huge beers, stunning campus. The pale ale here tastes different — it's the mountain water.</li>
+        
+        <li><strong>Wicked Weed</strong> (Downtown) — The brewery that put Asheville sours on the map. Also have excellent IPAs. Go upstairs for the Funkatorium (all sours, all the time).</li>
+        
+        <li><strong>Bhramari</strong> (Downtown) — Experimental, weird, wonderful. They'll try anything once — smoked mushroom stout? Sure. Great food menu too.</li>
+        
+        <li><strong>New Belgium</strong> (West Asheville) — Yes, it's a big brewery, but the Asheville location has a gorgeous patio and you can tour their sustainability efforts.</li>
+        
+        <li><strong>Burial</strong> (South Slope) — Dark arts theme, metal music, and some of the best IPAs in town. The Skies Hidden is a must-try.</li>
+        
+        <li><strong>High Wire</strong> (South Slope) — Circus-themed with creative beers like the Peanut Butter Jelly Time porter. Great outdoor seating.</li>
+        
+        <li><strong>Green Man</strong> (Downtown) — English-style ales, cozy patio, old-school Asheville vibe. The ESB is classic.</li>
+        
+        <li><strong>Hillman</strong> (Old Fort) — Worth the 20-minute drive for the views alone. Family-friendly, great lagers, stunning mountain setting.</li>
+    </ol>
+
+    <div class="highlight-box">
+        <strong>🍻 Pro Tip:</strong> Download the Asheville Brewery Passport app to track your visits and earn rewards. Most breweries offer flights (4-5 small pours) so you can sample widely.
+    </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- OUTDOOR ADVENTURES -->
+<div class="page">
+    <h2><span class="category-icon">🥾</span>Outdoor Adventures</h2>
+    
+    <div class="must-do">
+        <h3>Must-Do Hikes</h3>
+        <p><strong>Max Patch</strong> — The best sunset spot in Western NC. A 360° grassy bald with views forever. Easy 2.4-mile loop. Go 2 hours before sunset, bring a picnic.</p>
+        <p><strong>Triple Falls</strong> — Three waterfalls, one hike. Moderate 3-mile loop. Part of Hunger Games was filmed here. Dupont State Forest.</p>
+        <p><strong>Craggy Gardens</strong> — Rhododendron tunnels in June, 360° views year-round. Easy 1.7 miles on the Blue Ridge Parkway.</p>
+    </div>
+
+    <h3>Hiking Guide</h3>
+    <table>
+        <tr>
+            <th>Trail</th>
+            <th>Distance</th>
+            <th>Difficulty</th>
+            <th>Why Go</th>
+        </tr>
+        <tr>
+            <td><strong>Craggy Gardens</strong></td>
+            <td>1.7 mi</td>
+            <td>Easy</td>
+            <td>360° views, rhododendrons (Jun)</td>
+        </tr>
+        <tr>
+            <td><strong>Max Patch</strong></td>
+            <td>2.4 mi</td>
+            <td>Easy</td>
+            <td>Best sunset spot, grassy bald</td>
+        </tr>
+        <tr>
+            <td><strong>Triple Falls</strong></td>
+            <td>3.0 mi</td>
+            <td>Moderate</td>
+            <td>3 waterfalls, Hunger Games</td>
+        </tr>
+        <tr>
+            <td><strong>Chimney Rock</strong></td>
+            <td>Various</td>
+            <td>Easy-Hard</td>
+            <td>Iconic rock, elevator option</td>
+        </tr>
+        <tr>
+            <td><strong>Graveyard Fields</strong></td>
+            <td>3.0 mi</td>
+            <td>Easy</td>
+            <td>Waterfalls + swimming holes</td>
+        </tr>
+        <tr>
+            <td><strong>Mount Pisgah</strong></td>
+            <td>2.6 mi</td>
+            <td>Moderate</td>
+            <td>Summit tower, wildlife</td>
+        </tr>
+    </table>
+
+    <h3>Scenic Drives</h3>
+    <ul>
+        <li><strong>Blue Ridge Parkway</strong> — America's favorite drive. Must-stops: Craggy Gardens (Mile 364), Folk Art Center (Mile 382), Mount Pisgah (Mile 407)</li>
+        <li><strong>Waterfall Byway (Hwy 64)</strong> — Leads to Dupont State Forest, home of Triple Falls and High Falls</li>
+    </ul>
+
+    <h3>Other Outdoor Fun</h3>
+    <ul>
+        <li><strong>French Broad River tubing</strong> — Zen Tubing offers lazy floats through town</li>
+        <li><strong>Navitat Ziplining</strong> — (Mars Hill) Zip through the forest canopy</li>
+        <li><strong>Asheville Treetops Adventure Park</strong> — Ropes course and climbing</li>
+        <li><strong>Pisgah National Forest</strong> — Mountain biking, hiking, camping</li>
+    </ul>
+
+    <div class="tip-box">
+        <strong>🌲 Trail Etiquette:</strong> Pack out everything you pack in. Stay on marked trails — our ecosystems are fragile. And if you see a black bear (rare but possible), make noise and back away slowly. Don't run!
+    </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ARTS & CULTURE -->
+<div class="page">
+    <h2><span class="category-icon">🎨</span>Arts & Culture</h2>
+    
+    <h3>River Arts District</h3>
+    <p>200+ artists working in converted warehouses along the French Broad River. This is Asheville's creative heart.</p>
+    <ul>
+        <li><strong>Wedge Studios</strong> — Pottery, glass, painting</li>
+        <li><strong>Curve Studios</strong> — Local artist collective</li>
+        <li><strong>First Friday Art Walks</strong> — Monthly, free, 5-8 PM</li>
+    </ul>
+
+    <h3>Museums & Culture</h3>
+    <ul>
+        <li><strong>Asheville Art Museum</strong> — Southern Appalachian art, contemporary exhibitions</li>
+        <li><strong>Folk Art Center</strong> (Blue Ridge Parkway) — Traditional mountain crafts, free admission</li>
+        <li><strong>Biltmore Estate</strong> — America's largest home, gardens, winery. Plan 4-6 hours.</li>
+        <li><strong>Asheville Pinball Museum</strong> — Play 80+ vintage machines!</li>
+    </ul>
+
+    <h3>Live Music Venues</h3>
+    <ul>
+        <li><strong>The Orange Peel</strong> — Historic venue, national acts</li>
+        <li><strong>Rabbit Rabbit</strong> — Outdoor concerts, food trucks</li>
+        <li><strong>Eagle's Nest (Omni Grove Park)</strong> — Sunset jazz, fancy cocktails</li>
+        <li><strong>Isis Music Hall</strong> — Intimate, local + touring acts</li>
+    </ul>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- QUICK REFERENCE -->
+<div class="page">
+    <h2><span class="category-icon">📱</span>Quick Reference</h2>
+    
+    <h3>Essential Info</h3>
+    <table>
+        <tr>
+            <th>Need</th>
+            <th>Details</th>
+        </tr>
+        <tr>
+            <td><strong>Emergency</strong></td>
+            <td>911</td>
+        </tr>
+        <tr>
+            <td><strong>Non-Emergency</strong></td>
+            <td>(828) 252-1110</td>
+        </tr>
+        <tr>
+            <td><strong>Visitor Center</strong></td>
+            <td>exploreasheville.com</td>
+        </tr>
+        <tr>
+            <td><strong>Elevation</strong></td>
+            <td>2,200 feet (10-15° cooler)</td>
+        </tr>
+        <tr>
+            <td><strong>Free Downtown Bus</strong></td>
+            <td>ART (Asheville Redefines Transit)</td>
+        </tr>
+        <tr>
+            <td><strong>Parking</strong></td>
+            <td>Free after 6 PM, metered until then</td>
+        </tr>
+    </table>
+
+    <h3>Best Times to Visit Places</h3>
+    <ul>
+        <li><strong>Breweries:</strong> Weekday afternoons (less crowded), weekends for live music</li>
+        <li><strong>Hiking:</strong> Early morning (fewer crowds, better parking)</li>
+        <li><strong>Downtown:</strong> Weekends for street performers, weekday mornings for shopping</li>
+        <li><strong>Restaurants:</strong> Make reservations for weekend dinners</li>
+    </ul>
+
+    <div class="highlight-box">
+        <strong>🌤️ Weather Reality Check:</strong> Asheville has "mountain weather." It can be sunny downtown and raining in the mountains 20 minutes away. Pack a rain jacket, wear layers, and don't trust the forecast past 24 hours.
+    </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- FROM THIS HOUSE -->
+<div class="page">
+    <h2><span class="category-icon">🏠</span>From This Tiny House</h2>
+    
+    <div class="intro-box">
+        <p>You're staying in one of the coolest spots near Asheville. Here's what you need to know about getting around from here.</p>
+    </div>
+
+    <h3>Quick Distances</h3>
+    <table>
+        <tr>
+            <th>Destination</th>
+            <th>Drive Time</th>
+        </tr>
+        <tr>
+            <td>Downtown Asheville</td>
+            <td>___ minutes</td>
+        </tr>
+        <tr>
+            <td>Blue Ridge Parkway</td>
+            <td>___ minutes</td>
+        </tr>
+        <tr>
+            <td>Biltmore Estate</td>
+            <td>___ minutes</td>
+        </tr>
+        <tr>
+            <td>Closest Grocery Store</td>
+            <td>___ minutes</td>
+        </tr>
+    </table>
+
+    <h3>Host's Personal Favorites</h3>
+    <div class="must-do">
+        <p><strong>My #1 Local Secret:</strong> _____________________</p>
+        <p><strong>Best Coffee Near Here:</strong> _____________________</p>
+        <p><strong>Hidden Gem Restaurant:</strong> _____________________</p>
+        <p><strong>Best Sunset Spot:</strong> _____________________</p>
+    </div>
+
+    <div class="tip-box">
+        <strong>💬 Questions?</strong> Text your host anytime! I'm local and love sharing this place. Whether you need a dinner rec, hiking advice, or just want to know where to find the best biscuits — hit me up.
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <h2>Enjoy Asheville!</h2>
+    <p>It's a magical place — take your time, talk to locals, and don't try to do everything.</p>
+    <p style="margin-top: 20px; opacity: 0.8;">🏔️ Last Updated: March 2026</p>
+</div>
+
+</body>
+</html>

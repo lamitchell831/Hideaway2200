@@ -1,0 +1,21 @@
+{
+  "logs": [
+    {
+      "timestamp": "2026-03-26T21:42:00Z",
+      "device": "HAG-CDJR-0086",
+      "script": "disk-cleanup",
+      "status": "failed - api_endpoint_unavailable",
+      "user": "6038232911",
+      "error": "Atera API v3 script execution endpoint not found"
+    },
+    {
+      "timestamp": "2026-03-26T21:48:00Z",
+      "device": "HAG-CDJR-0086",
+      "script": "patch-check",
+      "status": "failed - api_endpoint_unavailable",
+      "user": "6038232911",
+      "error": "Atera API v3 script execution endpoint not found"
+    }
+  ],
+  "created": "2026-03-26T21:13:00Z"
+}
