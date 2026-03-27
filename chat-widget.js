@@ -1,16 +1,14 @@
 // Hideaway 2200 Chat Widget
-// Forwards messages to Telegram bot
+// Forwards messages to Telegram bot via Cloudflare Worker
 
 (function() {
-  // Configuration - UPDATE THESE
+  // Configuration
   const CONFIG = {
-    botToken: '8659177571:AAFuI7vv9My6qchdQ167hNObUJnqEHvXo1w',  // BotFather token
-    chatId: '6038232911',              // Your Telegram ID
+    workerUrl: 'https://hideaway2200-chat.lamitchell831.workers.dev',  // Cloudflare Worker endpoint
     welcomeMessage: 'Hi! Questions about Hideaway 2200? I\'ll connect you with the host.',
-    offlineMessage: 'Thanks for your message! I\'ll get back to you shortly.'
   };
 
-  // Helper functions defined first
+  // Helper function for time
   function hhFormatTime() {
     return new Date().toLocaleTimeString('en-US', { 
       hour: 'numeric', 
@@ -19,7 +17,7 @@
     });
   }
 
-  // Create widget HTML - use placeholder for time, fill in after functions load
+  // Create widget HTML
   const widgetHTML = `
     <div id="hh-chat-widget" class="hh-chat-closed">
       <div class="hh-chat-header">
@@ -30,7 +28,7 @@
         <div class="hh-chat-messages" id="hh-messages">
           <div class="hh-message hh-message-bot">
             <div class="hh-message-text">${CONFIG.welcomeMessage}</div>
-            <div class="hh-message-time" id="hh-welcome-time">${hhFormatTime()}</div>
+            <div class="hh-message-time">${hhFormatTime()}</div>
           </div>
         </div>
         <div class="hh-chat-input-area">
@@ -204,17 +202,14 @@
         background: #3d4a3d;
       }
       
-      #hh-chat-button.hh-chat-button-closed {
-        display: flex;
-      }
-      
       #hh-chat-button.hh-chat-button-open {
-        display: none;
+        opacity: 0;
+        pointer-events: none;
       }
       
       @media (max-width: 480px) {
         #hh-chat-widget {
-          width: calc(100% - 40px);
+          width: calc(100vw - 40px);
           right: 20px;
           left: 20px;
         }
@@ -222,24 +217,25 @@
     </style>
   `;
 
-  // Inject widget
+  // Inject widget into page
   document.head.insertAdjacentHTML('beforeend', widgetCSS);
   document.body.insertAdjacentHTML('beforeend', widgetHTML);
 
-  // Chat functions
+  // Global functions
   window.hhChatToggle = function() {
     const widget = document.getElementById('hh-chat-widget');
     const button = document.getElementById('hh-chat-button');
+    const isClosed = widget.classList.contains('hh-chat-closed');
     
-    if (widget.classList.contains('hh-chat-closed')) {
+    if (isClosed) {
       widget.classList.remove('hh-chat-closed');
-      button.classList.remove('hh-chat-button-closed');
       button.classList.add('hh-chat-button-open');
+      document.querySelector('.hh-chat-toggle').textContent = '−';
       document.getElementById('hh-input').focus();
     } else {
       widget.classList.add('hh-chat-closed');
       button.classList.remove('hh-chat-button-open');
-      button.classList.add('hh-chat-button-closed');
+      document.querySelector('.hh-chat-toggle').textContent = '+';
     }
   };
 
@@ -253,28 +249,28 @@
     hhAddMessage(message, 'user');
     input.value = '';
     
-    // Send to Telegram via backend
+    // Send via Cloudflare Worker
     try {
-      const response = await fetch('https://api.telegram.org/bot' + CONFIG.botToken + '/sendMessage', {
+      const response = await fetch(CONFIG.workerUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          chat_id: CONFIG.chatId,
-          text: `🏡 Hideaway 2200 Website Chat\\n\\n👤 Visitor: ${message}\\n\\nReply here to respond.`,
-          parse_mode: 'Markdown'
+          name: '',
+          email: '',
+          message: message
         })
       });
       
-      if (response.ok) {
-        hhAddMessage('Message sent! The host will reply shortly.', 'bot');
+      const result = await response.json();
+      
+      if (result.success) {
+        hhAddMessage('✓ Message sent! The host will reply on Telegram shortly.', 'bot');
       } else {
-        hhAddMessage('Thanks for your message! We\'ll get back to you soon.', 'bot');
+        throw new Error(result.error || 'Failed to send');
       }
     } catch (error) {
       console.error('Chat error:', error);
-      // Fallback - could also email or store locally
-      localStorage.setItem('hh-chat-pending', message);
-      hhAddMessage('Thanks for your message! We\'ll get back to you soon.', 'bot');
+      hhAddMessage('⚠️ Having trouble connecting. Please contact us directly.', 'bot');
     }
   };
 
@@ -295,6 +291,8 @@
     div.textContent = text;
     return div.innerHTML;
   };
+
+  window.hhFormatTime = hhFormatTime;
 
   // Auto-open chat after 30 seconds on first visit
   if (!localStorage.getItem('hh-chat-seen')) {
