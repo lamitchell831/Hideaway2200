@@ -4,7 +4,7 @@
 (function() {
   // Configuration - UPDATE THESE
   const CONFIG = {
-    botToken: 'YOUR_BOT_TOKEN_HERE',  // You'll get this from BotFather
+    botToken: '8659177571:AAFuI7vv9My6qchdQ167hNObUJnqEHvXo1w',  // BotFather token
     chatId: '6038232911',              // Your Telegram ID
     welcomeMessage: 'Hi! Questions about Hideaway 2200? I\'ll connect you with the host.',
     offlineMessage: 'Thanks for your message! I\'ll get back to you shortly.'
