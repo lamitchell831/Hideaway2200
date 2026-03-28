@@ -16,7 +16,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: hideaway2200.com
-          username: Public@hideaway2200.com
+          username: public_html@hideaway2200.com
           password: ${{ secrets.CPANEL_FTP_PASSWORD }}
           protocol: ftps
           port: 21
