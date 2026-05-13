@@ -261,18 +261,18 @@ bye
 
 ```html
 <!-- Basic -->
-<title>Hideaway 2200 | Tiny House Rental Asheville NC | Sleeps 8</title>
-<meta name="description" content="Modern tiny house on a private pond near Asheville, NC. Sleeps 8...">
+<title>Hideaway 2200 | Tiny House Rental Asheville NC | Sleeps 5</title>
+<meta name="description" content="Modern tiny house on a private pond near Asheville, NC. Sleeps up to 5...">
 <meta name="keywords" content="tiny house rental asheville nc, cabin rental, vacation rental...">
 
 <!-- Open Graph (Facebook) -->
 <meta property="og:title" content="Hideaway 2200 | Tiny House Rental Asheville NC">
-<meta property="og:description" content="Modern tiny house sleeping 8 on a private pond...">
+<meta property="og:description" content="Modern tiny house sleeping up to 5 on a private pond...">
 <meta property="og:image" content="https://hideaway2200.com/og-image.jpg">
 
 <!-- Twitter Cards -->
 <meta property="twitter:title" content="Hideaway 2200 | Tiny House Rental Asheville NC">
-<meta property="twitter:description" content="Modern tiny house sleeping 8...">
+<meta property="twitter:description" content="Modern tiny house sleeping up to 5...">
 ```
 
 ### Structured Data (Schema.org)

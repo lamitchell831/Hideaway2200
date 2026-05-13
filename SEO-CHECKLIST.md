@@ -19,7 +19,7 @@
 ### Content SEO
 - [x] Keywords in H1, H2, first paragraph
 - [x] Location mentions (Asheville, NC, Blue Ridge Mountains)
-- [x] Feature mentions (tiny house, pond, sleeps 7)
+- [x] Feature mentions (tiny house, pond, sleeps 5)
 - [x] Internal linking structure
 - [x] Keyword-rich URLs (/#about, /#amenities)
 
