@@ -16,10 +16,9 @@
 3. [Dependencies](#dependencies)
 4. [Design System](#design-system)
 5. [Features](#features)
-6. [Chat Widget](#chat-widget)
-7. [Deployment](#deployment)
-8. [SEO Configuration](#seo-configuration)
-9. [Maintenance](#maintenance)
+6. [Deployment](#deployment)
+7. [SEO Configuration](#seo-configuration)
+8. [Maintenance](#maintenance)
 
 ---
 
@@ -55,7 +54,6 @@ The Hideaway 2200 website is a **static HTML website** — no backend server, no
 │    ┌──────────────────────┐             │
 │    │   index.html         │             │
 │    │   guidebook.html     │             │
-│    │   chat-widget.js     │             │
 │    │   hero-bg.jpg        │             │
 │    └──────────────────────┘             │
 └─────────────────────────────────────────┘
@@ -70,7 +68,6 @@ Hideaway2200/
 │
 ├── index.html              # Main landing page
 ├── guidebook.html          # Guest guidebook (HTML version)
-├── chat-widget.js          # Live chat widget (no secrets — calls Worker)
 ├── hero-bg.jpg             # Hero background image (Blue Ridge Mountains)
 │
 ├── robots.txt              # SEO: Search engine crawling rules
@@ -82,7 +79,6 @@ Hideaway2200/
 │       ├── deploy-cpanel.yml      # GitHub Actions auto-deployment
 │       └── staging-deploy.yml     # Staging deployment workflow
 │
-├── cloudflare-worker.js    # Cloudflare Worker (Telegram relay; reads secrets from env)
 └── README.md
 ```
 
@@ -132,8 +128,7 @@ tailwind.config = {
 
 | Service | Purpose | Data Shared |
 |---------|---------|-------------|
-| **Telegram Bot API** | Chat widget message delivery | Visitor name, email, message |
-| **Cloudflare Workers** | CORS proxy for Telegram | Message content (temporarily) |
+| **Airbnb** | All bookings and guest communication | Handled on Airbnb's platform |
 | **Google Fonts** | Typography | IP address (standard) |
 | **Font Awesome CDN** | Icons | IP address (standard) |
 
@@ -200,9 +195,8 @@ tailwind.config = {
 
 ### 4. Booking Section
 
-- **Direct booking emphasis**: "Book direct & save"
-- **OTA comparison**: Airbnb, Vrbo with pricing
-- **Trust badges**: Secure payment, instant confirmation
+- **Airbnb-only booking**: All CTAs link directly to the Airbnb listing
+- **Trust callouts**: Secure payment, instant confirmation, cancellation policy
 
 ### 5. Location Section
 
@@ -215,96 +209,6 @@ tailwind.config = {
 - **Interactive**: Click to expand/collapse
 - **Categories**: Booking, amenities, location, policies
 - **Smooth animation**: CSS transition
-
----
-
-## Chat Widget
-
-### Architecture
-
-The chat widget allows visitors to send messages that are delivered to your Telegram.
-
-```
-Visitor Browser
-      │
-      │ 1. Fills form (name, email, message)
-      │ 2. Clicks Send
-      ▼
-┌─────────────────────┐
-│  chat-widget.js     │
-│  - Validates input  │
-│  - Formats message  │
-└──────────┬──────────┘
-           │
-           │ POST to Cloudflare Worker
-           │ (avoids CORS issues)
-           ▼
-┌─────────────────────┐
-│  Cloudflare Worker  │
-│  (CORS proxy)       │
-│  - Receives POST    │
-│  - Sends to Telegram│
-└──────────┬──────────┘
-           │
-           │ Telegram Bot API
-           ▼
-┌─────────────────────┐
-│  Telegram Bot       │
-│  @Hideaway2200_bot  │
-│  - Delivers message │
-│  - You receive it   │
-└─────────────────────┘
-```
-
-### Configuration
-
-**Frontend widget configuration** (in `chat-widget.js`):
-```javascript
-const CONFIG = {
-    workerUrl: 'https://hideaway2200-chat.lamitchell831.workers.dev',
-    welcomeMessage: '...'
-};
-```
-
-The widget contains **no secrets**. It only knows the Worker URL — the bot token and chat ID live as Cloudflare Worker secrets.
-
-**Cloudflare Worker secrets** (set via `wrangler secret put` or the Cloudflare dashboard, never committed to git):
-
-| Secret | Purpose |
-|--------|---------|
-| `TELEGRAM_BOT_TOKEN` | Bot token issued by @BotFather |
-| `TELEGRAM_CHAT_ID`   | Destination Telegram chat/user ID |
-| `ALLOWED_ORIGIN` *(optional var)* | Allowed CORS origin, defaults to `https://hideaway2200.com` |
-
-Example setup:
-
-```bash
-wrangler secret put TELEGRAM_BOT_TOKEN   # paste token when prompted
-wrangler secret put TELEGRAM_CHAT_ID     # paste chat id when prompted
-```
-
-**Cloudflare Worker:**
-- Endpoint: `https://hideaway2200-chat.lamitchell831.workers.dev/`
-- Function: Receives POST from widget, validates input, forwards to Telegram API
-- CORS: Locked to `https://hideaway2200.com` (configurable via `ALLOWED_ORIGIN`)
-- Validation: Requires non-empty name/email/message, rejects malformed email, caps field lengths
-
-> **Security note:** If the bot token has ever been committed to this repo or pasted in documentation, rotate it via @BotFather and update the `TELEGRAM_BOT_TOKEN` secret. The previous token in git history must be considered compromised.
-
-### Message Flow
-
-1. **Visitor** enters name, email, message
-2. **Validation**: Both name and email required
-3. **Formatting**: Message includes name, email, timestamp
-4. **Delivery**: Sent via Cloudflare Worker to Telegram
-5. **Receipt**: You receive message on Telegram
-6. **Response**: You reply via email/phone (not in widget)
-
-### Privacy Notes
-
-- **No message storage**: Messages go directly to Telegram, not stored on website
-- **No visitor tracking**: No cookies, no analytics on chat
-- **SSL encrypted**: All communications over HTTPS
 
 ---
 
@@ -337,7 +241,6 @@ wrangler secret put TELEGRAM_CHAT_ID     # paste chat id when prompted
 sftp public_html@hideaway2200.com
 put index.html
 put guidebook.html
-put chat-widget.js
 put hero-bg.jpg
 bye
 ```
@@ -413,16 +316,10 @@ bye
 2. Keep same filename OR update HTML reference
 3. Commit and push
 
-**To update chat widget:**
-1. Edit `chat-widget.js`
-2. Test locally
-3. Commit and push
-
 ### Troubleshooting
 
 | Issue | Cause | Solution |
 |-------|-------|----------|
-| Chat not working | CORS or Worker down | Check Cloudflare Worker status |
 | Site not loading | DNS issue | Verify GoDaddy DNS points to cPanel |
 | Changes not showing | CDN cache | Clear browser cache (Ctrl+Shift+R) |
 | Images broken | Wrong path | Check file names match exactly |
@@ -437,12 +334,11 @@ bye
 ✅ **Advantages:**
 - No database to hack
 - No server-side code to exploit
-- No user input processing (except chat widget)
+- No user input processing (bookings handled by Airbnb)
 
 ⚠️ **Considerations:**
 - **XSS**: Minimal risk (no user-generated content displayed)
 - **Clickjacking**: Add X-Frame-Options header
-- **CORS**: Properly configured on Cloudflare Worker
 
 ### Recommended .htaccess
 
@@ -462,10 +358,10 @@ Options -Indexes
 
 ---
 
-## Support & Contact
+## Support
 
 **Website Issues:** Check this documentation first, then review GitHub repository
-**Chat Widget:** Verify Telegram bot is running, check Cloudflare Worker logs
+**Bookings & Guest Communication:** Handled entirely through the Airbnb listing
 **Hosting:** Namecheap cPanel support
 **Domain:** GoDaddy support
 
@@ -475,7 +371,7 @@ Options -Indexes
 
 ### March 27, 2026
 - ✅ Website launched
-- ✅ Chat widget implemented with Telegram integration
+- ✅ Bookings routed directly to Airbnb listing
 - ✅ Auto-deployment via GitHub Actions
 - ✅ SEO optimization complete
 
