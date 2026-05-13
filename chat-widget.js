@@ -19,10 +19,10 @@
 
   // Create widget HTML
   const widgetHTML = `
-    <div id="hh-chat-widget" class="hh-chat-closed">
+    <div id="hh-chat-widget" class="hh-chat-closed" role="dialog" aria-label="Chat with the host">
       <div class="hh-chat-header">
-        <span class="hh-chat-title">💬 Questions? Chat with Us</span>
-        <button class="hh-chat-toggle" onclick="hhChatToggle()">−</button>
+        <span class="hh-chat-title"><span aria-hidden="true">💬</span> Questions? Chat with Us</span>
+        <button class="hh-chat-toggle" onclick="hhChatToggle()" aria-label="Minimize chat">−</button>
       </div>
       <div class="hh-chat-body">
         <div class="hh-chat-messages" id="hh-messages">
@@ -39,8 +39,8 @@
         </div>
       </div>
     </div>
-    <button id="hh-chat-button" onclick="hhChatToggle()" class="hh-chat-button-closed">
-      💬
+    <button id="hh-chat-button" onclick="hhChatToggle()" class="hh-chat-button-closed" aria-label="Open chat with the host">
+      <span aria-hidden="true">💬</span>
     </button>
   `;
 

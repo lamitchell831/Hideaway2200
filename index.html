@@ -53,7 +53,6 @@
         "longitude": "-82.5515"
       },
       "priceRange": "$",
-      "telephone": "+1-XXX-XXX-XXXX",
       "amenityFeature": [
         {"@type": "LocationFeatureSpecification", "name": "Pond View"},
         {"@type": "LocationFeatureSpecification", "name": "Fire Pit"},
@@ -139,7 +138,7 @@
                         <a href="#amenities" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">Amenities</a>
                         <a href="#location" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">Location</a>
                         <a href="#guide" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">Guidebook</a>
-                        <a href="#contact" class="bg-forest text-cream px-6 py-2.5 rounded-lg hover:bg-sage transition tracking-wide text-sm uppercase">Book Now</a>
+                        <a href="#book" class="bg-forest text-cream px-6 py-2.5 rounded-lg hover:bg-sage transition tracking-wide text-sm uppercase">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -157,7 +156,7 @@
                 A private pond retreat sleeping 8. Queen bed, 3 bunks, loft & pull-out. Full kitchen, fire pit, large porch. Starting at <strong class="font-medium">$165/night</strong>.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#contact" class="bg-cream text-forest px-8 py-4 rounded-lg font-medium hover:bg-warm transition tracking-wide">
+                <a href="#book" class="bg-cream text-forest px-8 py-4 rounded-lg font-medium hover:bg-warm transition tracking-wide">
                     CHECK AVAILABILITY
                 </a>
                 <a href="#guide" class="border border-cream/60 text-cream px-8 py-4 rounded-lg font-medium hover:bg-cream/10 transition tracking-wide">
@@ -421,8 +420,8 @@
                         <h3 class="font-serif text-2xl font-bold mb-4 text-gray-900">Direct Booking</h3>
                         <p class="text-gray-600 mb-6">Save on fees by booking directly. Best rates guaranteed.</p>
 
-                        <!-- Simple Date Picker Form -->
-                        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-4">
+                        <!-- TODO(owner): Replace the action below with a real Formspree (or similar) form endpoint. While the placeholder is in place the form submits to the inquiry chat widget instead via JS. -->
+                        <form data-inquiry-form action="#contact" method="POST" class="space-y-4">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Check-in</label>
@@ -441,6 +440,12 @@
                                 <select name="guests" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-transparent">
                                     <option value="1">1 Guest</option>
                                     <option value="2" selected>2 Guests</option>
+                                    <option value="3">3 Guests</option>
+                                    <option value="4">4 Guests</option>
+                                    <option value="5">5 Guests</option>
+                                    <option value="6">6 Guests</option>
+                                    <option value="7">7 Guests</option>
+                                    <option value="8">8 Guests</option>
                                 </select>
                             </div>
 
@@ -502,23 +507,12 @@
                     </p>
                 </div>
                 
-                <!-- Setup Instructions (hidden, for your reference) -->
-                <!-- 
-                TO SETUP CALENDAR SYNC:
-                1. Airbnb iCal URL (use this): 
-                   https://www.airbnb.com/calendar/ical/34680387.ics?t=78566279a1434cfc91be226cb320a62c&locale=en
-                
-                2. In Google Calendar: 
-                   - Go to Settings → Add Calendar → From URL
-                   - Paste the iCal URL above
-                   - Set to auto-sync every few hours
-                
-                3. Get the embed code from Google Calendar settings:
-                   - Settings → Integrate Calendar → Embed code
-                   - Copy the iframe src URL
-                   - Replace the iframe src in the code above
-                
-                4. Save and publish website
+                <!--
+                  Calendar sync setup:
+                  1. In the Airbnb hosting dashboard, generate a private iCal export URL for this listing.
+                  2. In Google Calendar: Settings → Add Calendar → From URL. Paste the iCal URL. Keep this URL private — do NOT commit it to git or paste it into client-side HTML.
+                  3. From Google Calendar → Settings → Integrate Calendar, copy the public embed iframe src and replace the iframe src above.
+                  TODO(owner): Replace the placeholder Google Calendar embed above with the real public embed URL.
                 -->
             </div>
         </div>
@@ -538,78 +532,21 @@
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto text-center">
+                <!-- TODO(owner): Replace this card's href and visible address with your real contact email. -->
                 <div class="p-6 rounded-xl bg-warm">
-                    <span class="text-3xl mb-4 block">📧</span>
+                    <span class="text-3xl mb-4 block" aria-hidden="true">📧</span>
                     <h3 class="font-semibold mb-2">Email</h3>
-                    <a href="mailto:host@yourdomain.com" class="text-forest hover:underline">host@yourdomain.com</a>
+                    <p class="text-sm text-gray-600">Coming soon — use the chat widget for now.</p>
                 </div>
                 <div class="p-6 rounded-xl bg-warm">
-                    <span class="text-3xl mb-4 block">📱</span>
-                    <h3 class="font-semibold mb-2">Text</h3>
-                    <a href="tel:+1234567890" class="text-forest hover:underline">(828) XXX-XXXX</a>
+                    <span class="text-3xl mb-4 block" aria-hidden="true">💬</span>
+                    <h3 class="font-semibold mb-2">Chat With Us</h3>
+                    <button type="button" onclick="if (typeof hhChatToggle === 'function') hhChatToggle();" aria-label="Open chat widget" class="text-forest hover:underline">Open chat &rarr;</button>
                 </div>
                 <div class="p-6 rounded-xl bg-warm">
-                    <span class="text-3xl mb-4 block">💬</span>
+                    <span class="text-3xl mb-4 block" aria-hidden="true">⚡</span>
                     <h3 class="font-semibold mb-2">Quick Response</h3>
                     <p class="text-sm text-gray-600">Usually within 1 hour</p>
-                </div>
-            </div>
-        </div>
-    </section>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <span class="text-2xl mr-4">📧</span>
-                            <div>
-                                <p class="font-semibold">Email</p>
-                                <a href="mailto:host@yourdomain.com" class="text-forest hover:underline">host@yourdomain.com</a>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-2xl mr-4">📱</span>
-                            <div>
-                                <p class="font-semibold">Text</p>
-                                <a href="tel:+1234567890" class="text-forest hover:underline">(828) XXX-XXXX</a>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-2xl mr-4">🏠</span>
-                            <div>
-                                <p class="font-semibold">Airbnb</p>
-                                <a href="#" class="text-forest hover:underline">Book on Airbnb →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-8 rounded-2xl shadow-lg">
-                    <h3 class="font-serif text-2xl font-bold mb-6">Send a Message</h3>
-                    <form class="space-y-4" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                            <input type="text" name="name" required 
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" name="email" required 
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Dates Interested</label>
-                            <input type="text" name="dates" placeholder="e.g., June 15-18"
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                            <textarea name="message" rows="4" required
-                                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-transparent"></textarea>
-                        </div>
-                        <button type="submit" 
-                                class="w-full bg-forest text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition">
-                            Send Message
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -629,12 +566,12 @@
                         <li><a href="#about" class="hover:text-white transition">About</a></li>
                         <li><a href="#amenities" class="hover:text-white transition">Amenities</a></li>
                         <li><a href="#guide" class="hover:text-white transition">Local Guide</a></li>
-                        <li><a href="#" class="hover:text-white transition">House Rules</a></li>
+                        <li><a href="guidebook.html#house-rules" class="hover:text-white transition">House Rules</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4">Follow Along</h4>
-                    <p class="text-gray-400 mb-4">@yourtinyhouse</p>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <p class="text-gray-400 mb-4">Use the chat widget on this page to reach the host.</p>
                     <p class="text-sm text-gray-500">© 2026 Hideaway 2200. All rights reserved.</p>
                 </div>
             </div>
@@ -643,6 +580,37 @@
 
     <!-- Chat Widget -->
     <script src="chat-widget.js?v=5"></script>
+
+    <script>
+      // While the direct-booking form has no real backend, intercept submission
+      // and route the inquiry through the chat widget so guests still reach the host.
+      document.addEventListener('submit', function (event) {
+        var form = event.target;
+        if (!form || !form.matches || !form.matches('form[data-inquiry-form]')) return;
+        event.preventDefault();
+
+        var checkin = (form.elements.checkin && form.elements.checkin.value) || '';
+        var checkout = (form.elements.checkout && form.elements.checkout.value) || '';
+        var guests = (form.elements.guests && form.elements.guests.value) || '';
+        var email = (form.elements.email && form.elements.email.value) || '';
+        var note = (form.elements.message && form.elements.message.value) || '';
+        var summary = 'Booking inquiry — Check-in: ' + checkin + ', Check-out: ' + checkout +
+                      ', Guests: ' + guests + (note ? '\n\nNotes: ' + note : '');
+
+        if (typeof window.hhChatToggle === 'function') {
+          var widget = document.getElementById('hh-chat-widget');
+          if (widget && widget.classList.contains('hh-chat-closed')) window.hhChatToggle();
+          var emailField = document.getElementById('hh-email');
+          var messageField = document.getElementById('hh-message');
+          if (emailField && email) emailField.value = email;
+          if (messageField) messageField.value = summary;
+          var nameField = document.getElementById('hh-name');
+          if (nameField) nameField.focus();
+        } else {
+          alert("Thanks! Please use the chat widget in the corner to send your inquiry.");
+        }
+      });
+    </script>
 
 </body>
 </html>
