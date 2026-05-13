@@ -7,7 +7,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://hideaway2200.com/</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-05-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -15,6 +15,14 @@
       <image:title>Hideaway 2200 - Modern Tiny House Rental Asheville NC</image:title>
       <image:caption>Modern tiny house on private pond near Asheville, North Carolina</image:caption>
     </image:image>
+  </url>
+
+  <!-- Guidebook -->
+  <url>
+    <loc>https://hideaway2200.com/guidebook.html</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
 </urlset>

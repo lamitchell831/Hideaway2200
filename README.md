@@ -66,29 +66,27 @@ The Hideaway 2200 website is a **static HTML website** — no backend server, no
 ## File Structure
 
 ```
-tiny-house-website/
+Hideaway2200/
 │
 ├── index.html              # Main landing page
 ├── guidebook.html          # Guest guidebook (HTML version)
-├── chat-widget.js          # Live chat widget with Telegram integration
+├── chat-widget.js          # Live chat widget (no secrets — calls Worker)
 ├── hero-bg.jpg             # Hero background image (Blue Ridge Mountains)
-│
-├── hideaway2200-logo-v2.svg  # Brand logo (SVG format)
-├── hideaway2200-logo.svg     # Alternate logo version
 │
 ├── robots.txt              # SEO: Search engine crawling rules
 ├── sitemap.xml             # SEO: Site structure for search engines
-│
-├── .htaccess               # Apache server configuration (security headers)
-├── .gitignore              # Git ignore rules
+├── SEO-CHECKLIST.md        # SEO launch checklist
 │
 ├── .github/
 │   └── workflows/
-│       └── deploy-cpanel.yml  # GitHub Actions auto-deployment
+│       ├── deploy-cpanel.yml      # GitHub Actions auto-deployment
+│       └── staging-deploy.yml     # Staging deployment workflow
 │
-├── cloudflare-worker.js       # Cloudflare Worker proxy (for chat CORS)
-└── package.json               # Dependencies (if using npm)
+├── cloudflare-worker.js    # Cloudflare Worker (Telegram relay; reads secrets from env)
+└── README.md
 ```
+
+> Optional/expected-but-not-present files referenced elsewhere (e.g. `hideaway2200-icon.svg`, logo SVGs, `.htaccess`) are not currently tracked in this repo. Add them in `public_html/` on the server or commit them as needed.
 
 ---
 
@@ -260,20 +258,38 @@ Visitor Browser
 
 ### Configuration
 
-**Telegram Bot Token:**
+**Frontend widget configuration** (in `chat-widget.js`):
 ```javascript
-// In chat-widget.js (line 5)
 const CONFIG = {
-    botToken: '8659177571:AAFuI7vv9My6qchdQ167hNObUJnqEHvXo1w',
-    chatId: '6038232911',  // Your Telegram user ID
-    workerUrl: 'https://hideaway2200-chat.lamitchell831.workers.dev/'
+    workerUrl: 'https://hideaway2200-chat.lamitchell831.workers.dev',
+    welcomeMessage: '...'
 };
+```
+
+The widget contains **no secrets**. It only knows the Worker URL — the bot token and chat ID live as Cloudflare Worker secrets.
+
+**Cloudflare Worker secrets** (set via `wrangler secret put` or the Cloudflare dashboard, never committed to git):
+
+| Secret | Purpose |
+|--------|---------|
+| `TELEGRAM_BOT_TOKEN` | Bot token issued by @BotFather |
+| `TELEGRAM_CHAT_ID`   | Destination Telegram chat/user ID |
+| `ALLOWED_ORIGIN` *(optional var)* | Allowed CORS origin, defaults to `https://hideaway2200.com` |
+
+Example setup:
+
+```bash
+wrangler secret put TELEGRAM_BOT_TOKEN   # paste token when prompted
+wrangler secret put TELEGRAM_CHAT_ID     # paste chat id when prompted
 ```
 
 **Cloudflare Worker:**
 - Endpoint: `https://hideaway2200-chat.lamitchell831.workers.dev/`
-- Function: Receives POST from widget, forwards to Telegram API
-- CORS: Enabled for hideaway2200.com
+- Function: Receives POST from widget, validates input, forwards to Telegram API
+- CORS: Locked to `https://hideaway2200.com` (configurable via `ALLOWED_ORIGIN`)
+- Validation: Requires non-empty name/email/message, rejects malformed email, caps field lengths
+
+> **Security note:** If the bot token has ever been committed to this repo or pasted in documentation, rotate it via @BotFather and update the `TELEGRAM_BOT_TOKEN` secret. The previous token in git history must be considered compromised.
 
 ### Message Flow
 
