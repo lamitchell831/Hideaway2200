@@ -216,16 +216,21 @@ tailwind.config = {
 
 ### GitHub Actions Auto-Deployment
 
-**File:** `.github/workflows/deploy-cpanel.yml`
+Two workflows are available. **SSH is the preferred path**; FTP remains as a fallback.
 
-**Triggers:**
-- Push to `main` branch
-- Manual dispatch
+#### Preferred: SSH / rsync — `.github/workflows/deploy-ssh.yml`
 
-**Process:**
-1. Checkout repository
-2. Upload files to cPanel via FTP
-3. Deploy to `public_html/`
+Uses key-based SSH and `rsync` for an incremental, encrypted, host-key-pinned
+deploy. Full setup steps (generate key, authorize in cPanel, add secrets, test)
+live in [`docs/deployment-ssh.md`](docs/deployment-ssh.md).
+
+**Required secrets:** `CPANEL_HOST`, `CPANEL_USER`, `CPANEL_SSH_KEY`, `CPANEL_TARGET_DIR`
+**Optional secrets:** `CPANEL_PORT` (defaults to `22`), `CPANEL_KNOWN_HOSTS` (recommended)
+
+#### Legacy: FTP — `.github/workflows/deploy-cpanel.yml`
+
+**Triggers:** push to `main`, manual dispatch
+**Process:** checkout → upload via FTPS → deploy to `public_html/`
 
 **Required Secrets (GitHub Settings → Secrets):**
 | Secret Name | Value |
@@ -233,6 +238,9 @@ tailwind.config = {
 | `CPANEL_FTP_HOST` | `ftp.hideaway2200.com` |
 | `CPANEL_FTP_USERNAME` | `public_html@hideaway2200.com` |
 | `CPANEL_FTP_PASSWORD` | [Your FTP password] |
+
+Once the SSH workflow is verified, the FTP workflow can be disabled from the
+GitHub Actions UI to ensure a single deploy path.
 
 ### Manual Deployment
 
