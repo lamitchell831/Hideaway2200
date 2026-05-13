@@ -94,12 +94,51 @@
     </script>
     <style>
         .hero-bg {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('hero-bg.jpg');
+            background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.5)), url('images/hero-aframe.jpg');
             background-size: cover;
-            background-position: center 30%;
+            background-position: center center;
         }
         .amenity-card:hover {
             transform: translateY(-4px);
+        }
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 0.75rem;
+        }
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.04);
+        }
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 0.5rem;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.25rem;
+            color: #f8f6f3;
+            font-size: 2.5rem;
+            line-height: 1;
+            cursor: pointer;
+            background: none;
+            border: none;
         }
     </style>
 </head>
@@ -137,6 +176,7 @@
                     <div class="ml-10 flex items-baseline space-x-8">
                         <a href="#about" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">About</a>
                         <a href="#amenities" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">Amenities</a>
+                        <a href="#gallery" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">Gallery</a>
                         <a href="#location" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">Location</a>
                         <a href="#guide" class="text-sage hover:text-forest transition tracking-wide text-sm uppercase">Guidebook</a>
                         <a href="#contact" class="bg-forest text-cream px-6 py-2.5 rounded-lg hover:bg-sage transition tracking-wide text-sm uppercase">Book Now</a>
@@ -198,8 +238,8 @@
                     </div>
                 </div>
                 <figure class="relative">
-                    <img src="https://images.unsplash.com/photo-1522050212171-61b01dd24579?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                         alt="Hideaway 2200 tiny house interior with modern design and mountain views near Asheville NC" 
+                    <img src="images/about-interior.jpg"
+                         alt="Sunlit living area of Hideaway 2200 A-frame tiny house with vaulted ceilings and glass doors to the deck"
                          loading="lazy"
                          class="rounded-2xl shadow-2xl w-full">
                     <figcaption class="absolute -bottom-6 -left-6 bg-forest text-cream p-6 rounded-xl shadow-lg hidden md:block">
@@ -273,6 +313,90 @@
             </div>
         </div>
     </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 md:py-32 bg-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="text-sage font-medium mb-2 uppercase tracking-[0.2em] text-sm">Take a Look Around</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-medium text-forest">
+                    Photo Gallery
+                </h2>
+                <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">
+                    From the A-frame exterior to the cozy loft — every corner of Hideaway 2200.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+                <button type="button" class="gallery-item shadow-sm bg-warm-dark col-span-2 row-span-2 aspect-square md:aspect-auto md:row-span-2 md:col-span-2" data-full="images/gallery/aframe-exterior.jpg">
+                    <img src="images/gallery/aframe-exterior.jpg" alt="A-frame exterior of Hideaway 2200 with deck and glass doors" loading="lazy" class="w-full h-full object-cover">
+                </button>
+                <button type="button" class="gallery-item shadow-sm bg-warm-dark aspect-square" data-full="images/gallery/deck-doors.jpg">
+                    <img src="images/gallery/deck-doors.jpg" alt="Interior view toward the deck and large glass doors" loading="lazy" class="w-full h-full object-cover">
+                </button>
+                <button type="button" class="gallery-item shadow-sm bg-warm-dark aspect-square" data-full="images/gallery/living-sofa.jpg">
+                    <img src="images/gallery/living-sofa.jpg" alt="Living area with sofa and pull-out at Hideaway 2200" loading="lazy" class="w-full h-full object-cover">
+                </button>
+                <button type="button" class="gallery-item shadow-sm bg-warm-dark aspect-square" data-full="images/gallery/dining-living.jpg">
+                    <img src="images/gallery/dining-living.jpg" alt="Dining area with TV and ladder to the loft" loading="lazy" class="w-full h-full object-cover">
+                </button>
+                <button type="button" class="gallery-item shadow-sm bg-warm-dark aspect-square" data-full="images/gallery/kitchen.jpg">
+                    <img src="images/gallery/kitchen.jpg" alt="Full kitchen with cooktop, fridge and laundry area" loading="lazy" class="w-full h-full object-cover">
+                </button>
+                <button type="button" class="gallery-item shadow-sm bg-warm-dark aspect-square" data-full="images/gallery/bedroom.jpg">
+                    <img src="images/gallery/bedroom.jpg" alt="Queen bedroom at Hideaway 2200" loading="lazy" class="w-full h-full object-cover">
+                </button>
+                <button type="button" class="gallery-item shadow-sm bg-warm-dark aspect-square" data-full="images/gallery/loft-interior.jpg">
+                    <img src="images/gallery/loft-interior.jpg" alt="Loft sleeping area with vaulted A-frame ceiling" loading="lazy" class="w-full h-full object-cover">
+                </button>
+                <button type="button" class="gallery-item shadow-sm bg-warm-dark aspect-square" data-full="images/gallery/loft-ladder.jpg">
+                    <img src="images/gallery/loft-ladder.jpg" alt="Bunk and loft ladder inside the tiny house" loading="lazy" class="w-full h-full object-cover">
+                </button>
+                <button type="button" class="gallery-item shadow-sm bg-warm-dark aspect-square" data-full="images/gallery/bathroom.jpg">
+                    <img src="images/gallery/bathroom.jpg" alt="Full bathroom with walk-in shower" loading="lazy" class="w-full h-full object-cover">
+                </button>
+                <button type="button" class="gallery-item shadow-sm bg-warm-dark aspect-square" data-full="images/gallery/laundry.jpg">
+                    <img src="images/gallery/laundry.jpg" alt="In-unit washer and dryer closet" loading="lazy" class="w-full h-full object-cover">
+                </button>
+                <button type="button" class="gallery-item shadow-sm bg-warm-dark aspect-square" data-full="images/gallery/exterior-creek.jpg">
+                    <img src="images/gallery/exterior-creek.jpg" alt="A-frame exterior near the creek on the property" loading="lazy" class="w-full h-full object-cover">
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+        <button type="button" class="lightbox-close" aria-label="Close gallery viewer">&times;</button>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+    <script>
+        (function () {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = lightbox.querySelector('.lightbox-close');
+            document.querySelectorAll('.gallery-item').forEach(function (item) {
+                item.addEventListener('click', function () {
+                    const src = item.getAttribute('data-full');
+                    const img = item.querySelector('img');
+                    lightboxImg.src = src;
+                    lightboxImg.alt = img ? img.alt : '';
+                    lightbox.classList.add('active');
+                });
+            });
+            function close() {
+                lightbox.classList.remove('active');
+                lightboxImg.src = '';
+            }
+            closeBtn.addEventListener('click', close);
+            lightbox.addEventListener('click', function (e) {
+                if (e.target === lightbox) close();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) close();
+            });
+        })();
+    </script>
 
     <!-- Location Section -->
     <section id="location" class="py-20 md:py-32 bg-forest text-cream">
