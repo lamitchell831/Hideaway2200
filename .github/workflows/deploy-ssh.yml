@@ -1,0 +1,118 @@
+name: Deploy to cPanel via SSH
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: "deploy-ssh-${{ github.ref }}"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Rsync site to cPanel over SSH
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Optional npm build (only if package.json exists)
+        run: |
+          if [ -f package.json ]; then
+            echo "package.json detected — running install + build if defined"
+            if [ -f package-lock.json ]; then
+              npm ci
+            else
+              npm install
+            fi
+            if npm run | grep -qE '^\s+build'; then
+              npm run build
+            else
+              echo "No 'build' script defined — skipping build step"
+            fi
+          else
+            echo "No package.json found — static site, no build needed"
+          fi
+
+      - name: Validate required secrets
+        env:
+          CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
+          CPANEL_USER: ${{ secrets.CPANEL_USER }}
+          CPANEL_SSH_KEY: ${{ secrets.CPANEL_SSH_KEY }}
+          CPANEL_TARGET_DIR: ${{ secrets.CPANEL_TARGET_DIR }}
+        run: |
+          missing=0
+          for var in CPANEL_HOST CPANEL_USER CPANEL_SSH_KEY CPANEL_TARGET_DIR; do
+            if [ -z "${!var}" ]; then
+              echo "::error::Required secret $var is not set"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::One or more required secrets are missing. See docs/deployment-ssh.md"
+            exit 1
+          fi
+
+      - name: Configure SSH
+        env:
+          CPANEL_SSH_KEY: ${{ secrets.CPANEL_SSH_KEY }}
+          CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
+          CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
+          CPANEL_KNOWN_HOSTS: ${{ secrets.CPANEL_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          # Write private deploy key
+          printf '%s\n' "$CPANEL_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          PORT="${CPANEL_PORT:-22}"
+
+          # Prefer a pinned known_hosts entry when provided; fall back to ssh-keyscan
+          if [ -n "$CPANEL_KNOWN_HOSTS" ]; then
+            printf '%s\n' "$CPANEL_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          else
+            echo "CPANEL_KNOWN_HOSTS not set — using ssh-keyscan (less secure; consider pinning)"
+            ssh-keyscan -p "$PORT" -H "$CPANEL_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          fi
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy with rsync over SSH
+        env:
+          CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
+          CPANEL_USER: ${{ secrets.CPANEL_USER }}
+          CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
+          CPANEL_TARGET_DIR: ${{ secrets.CPANEL_TARGET_DIR }}
+        run: |
+          PORT="${CPANEL_PORT:-22}"
+
+          # Trailing slash on source = copy contents, not the dir itself
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -p ${PORT} -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts" \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.gitignore' \
+            --exclude='.gitattributes' \
+            --exclude='node_modules/' \
+            --exclude='README.md' \
+            --exclude='SEO-CHECKLIST.md' \
+            --exclude='docs/' \
+            --exclude='cloudflare-worker.js' \
+            --exclude='package.json' \
+            --exclude='package-lock.json' \
+            --exclude='.env' \
+            --exclude='.env.*' \
+            --exclude='*.local' \
+            ./ "${CPANEL_USER}@${CPANEL_HOST}:${CPANEL_TARGET_DIR}/"
+
+      - name: Cleanup SSH key
+        if: always()
+        run: |
+          rm -f ~/.ssh/deploy_key
